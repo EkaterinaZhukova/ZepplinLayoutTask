@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ViewController: UIViewController {
     
@@ -32,7 +33,7 @@ class ViewController: UIViewController {
             segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font],
                                                     for: .normal)
             UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
-
+            
         }
         myView.layer.cornerRadius = 10
         needHelpButton.layer.cornerRadius = 10
@@ -43,14 +44,32 @@ class ViewController: UIViewController {
         needHelpButton.layer.shadowOpacity = 0.6
         
         tabBar.selectedItem = tabBar.items?[2]
-
+        
     }
     @IBAction func needHelpAction(_ sender: Any) {
         self.blurEfffect.isHidden = false
         
-        childView.layer.cornerRadius = 30
-        self.childView.isHidden = false
-       
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let controller = storyboard.instantiateViewController(withIdentifier: "alertViewController") as? AlertViewController{
+            
+            
+            controller.view.layer.cornerRadius = 20
+            controller.view.frame.size = CGSize(width: 261, height: 261)
+            controller.view.center = self.view.center
+            controller.onCloseClosure = {[weak controller,weak self] in
+                controller?.removeFromParent()
+                controller?.view.removeFromSuperview()
+                controller?.willMove(toParent: nil)
+               
+                self?.blurEfffect.isHidden = true
+            }
+         
+            self.addChild(controller)
+            self.view.addSubview(controller.view)
+            self.didMove(toParent: self)
+            
+        }
+        
         
     }
 }

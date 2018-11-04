@@ -12,7 +12,7 @@ class AlertViewController: UIViewController {
 
     
     @IBOutlet weak var improveButton: UIButton!
-    
+    var onCloseClosure: (() -> Void)? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,11 +20,14 @@ class AlertViewController: UIViewController {
     }
     
     @IBAction func onImproveAction(_ sender: Any) {
-        self.removeFromParent()
-        self.view.removeFromSuperview()
-        self.willMove(toParent: nil)
+        if let close = onCloseClosure{
+            close()
+        }
+        
     }
-    
+    deinit {
+        print("AlertViewController deInit")
+    }
     /*
     // MARK: - Navigation
 
