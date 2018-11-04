@@ -20,11 +20,6 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var needHelpButton: UIButton!
     
-    @IBOutlet weak var childView: UIView!
-    
-    
-    @IBOutlet weak var childViewController: UIView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,7 +38,7 @@ class ViewController: UIViewController {
         needHelpButton.layer.shadowRadius = 10
         needHelpButton.layer.shadowOpacity = 0.6
         
-        tabBar.selectedItem = tabBar.items?[2]
+        tabBar.selectedItem = tabBar.items?[1]
         
     }
     @IBAction func needHelpAction(_ sender: Any) {
@@ -51,8 +46,6 @@ class ViewController: UIViewController {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let controller = storyboard.instantiateViewController(withIdentifier: "alertViewController") as? AlertViewController{
-            
-            
             controller.view.layer.cornerRadius = 20
             controller.view.frame.size = CGSize(width: 261, height: 261)
             controller.view.center = self.view.center
@@ -60,7 +53,6 @@ class ViewController: UIViewController {
                 controller?.removeFromParent()
                 controller?.view.removeFromSuperview()
                 controller?.willMove(toParent: nil)
-               
                 self?.blurEfffect.isHidden = true
             }
          
